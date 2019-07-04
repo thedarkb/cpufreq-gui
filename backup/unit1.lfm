@@ -1,0 +1,250 @@
+object cpufreqgui: Tcpufreqgui
+  Left = 340
+  Height = 381
+  Top = 138
+  Width = 231
+  Caption = 'Hard Abuse'
+  ClientHeight = 358
+  ClientWidth = 231
+  Menu = MainMenu1
+  OnCreate = FormCreate
+  LCLVersion = '2.0.2.0'
+  object throttleBoxes: TCheckGroup
+    Left = 8
+    Height = 73
+    Top = 208
+    Width = 216
+    AutoFill = True
+    Caption = 'Throttling'
+    ChildSizing.LeftRightSpacing = 6
+    ChildSizing.TopBottomSpacing = 6
+    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+    ChildSizing.EnlargeVertical = crsHomogenousChildResize
+    ChildSizing.ShrinkHorizontal = crsScaleChilds
+    ChildSizing.ShrinkVertical = crsScaleChilds
+    ChildSizing.Layout = cclLeftToRightThenTopToBottom
+    ChildSizing.ControlsPerLine = 1
+    ClientHeight = 56
+    ClientWidth = 212
+    Items.Strings = (
+      'Disable Thermal Throttling'
+      'Disable Power Throttling'
+    )
+    TabOrder = 0
+    Data = {
+      020000000202
+    }
+  end
+  object GroupBox1: TGroupBox
+    Left = 8
+    Height = 113
+    Top = 96
+    Width = 216
+    Caption = 'Scaling'
+    ClientHeight = 96
+    ClientWidth = 212
+    TabOrder = 1
+    object Governor: TLabel
+      Left = 8
+      Height = 15
+      Top = 8
+      Width = 60
+      Caption = 'Governor'
+      ParentColor = False
+    end
+    object maxF: TLabel
+      Left = 8
+      Height = 15
+      Top = 40
+      Width = 62
+      Caption = 'Max Freq.'
+      ParentColor = False
+    end
+    object minF: TLabel
+      Left = 8
+      Height = 15
+      Top = 72
+      Width = 58
+      Caption = 'Min Freq.'
+      ParentColor = False
+    end
+  end
+  object governorBox: TComboBox
+    Left = 112
+    Height = 25
+    Top = 112
+    Width = 100
+    ItemHeight = 0
+    Items.Strings = (
+      'Error'
+    )
+    Style = csDropDownList
+    TabOrder = 2
+  end
+  object GroupBox2: TGroupBox
+    Left = 8
+    Height = 88
+    Top = 8
+    Width = 216
+    Caption = 'Info'
+    ClientHeight = 71
+    ClientWidth = 212
+    TabOrder = 3
+    object Label2: TLabel
+      Left = 8
+      Height = 15
+      Top = 0
+      Width = 76
+      Caption = 'BIOS Limit: '
+      ParentColor = False
+    end
+    object bios: TLabel
+      Left = 128
+      Height = 15
+      Top = 0
+      Width = 59
+      AutoSize = False
+      Caption = 'bios'
+      Color = clWhite
+      ParentColor = False
+      Transparent = False
+    end
+    object Label4: TLabel
+      Left = 8
+      Height = 15
+      Top = 16
+      Width = 100
+      Caption = 'Maximum Freq:'
+      ParentColor = False
+    end
+    object maxFreq: TLabel
+      Left = 128
+      Height = 15
+      Top = 16
+      Width = 59
+      AutoSize = False
+      Caption = 'maxFreq'
+      Color = clWhite
+      ParentColor = False
+      Transparent = False
+    end
+    object Label6: TLabel
+      Left = 8
+      Height = 15
+      Top = 32
+      Width = 96
+      Caption = 'Minimum Freq:'
+      ParentColor = False
+    end
+    object minFreq: TLabel
+      Left = 128
+      Height = 15
+      Top = 32
+      Width = 59
+      AutoSize = False
+      Caption = 'minFreq'
+      Color = clWhite
+      ParentColor = False
+      Transparent = False
+    end
+    object Label8: TLabel
+      Left = 8
+      Height = 15
+      Top = 48
+      Width = 83
+      Caption = 'Current Freq:'
+      ParentColor = False
+    end
+    object curLbl: TLabel
+      Left = 128
+      Height = 15
+      Top = 48
+      Width = 59
+      AutoSize = False
+      Caption = 'curLbl'
+      Color = clWhite
+      ParentColor = False
+      Transparent = False
+    end
+  end
+  object Apply: TButton
+    Left = 8
+    Height = 25
+    Top = 288
+    Width = 48
+    Caption = 'Apply'
+    TabOrder = 4
+  end
+  object mkDefault: TButton
+    Left = 64
+    Height = 25
+    Top = 288
+    Width = 104
+    Caption = 'mkDefault'
+    TabOrder = 5
+  end
+  object Quit: TButton
+    Left = 176
+    Height = 25
+    Top = 288
+    Width = 48
+    Caption = 'Quit'
+    TabOrder = 6
+  end
+  object maxBox: TComboBox
+    Left = 112
+    Height = 25
+    Top = 144
+    Width = 100
+    ItemHeight = 0
+    Items.Strings = (
+      'Error'
+    )
+    Style = csDropDownList
+    TabOrder = 7
+  end
+  object minBox: TComboBox
+    Left = 112
+    Height = 25
+    Top = 176
+    Width = 100
+    ItemHeight = 0
+    Items.Strings = (
+      'Error'
+    )
+    Style = csDropDownList
+    TabOrder = 8
+  end
+  object Label1: TLabel
+    Left = 13
+    Height = 15
+    Top = 322
+    Width = 43
+    Caption = 'Label1'
+    ParentColor = False
+  end
+  object Label3: TLabel
+    Left = 13
+    Height = 15
+    Top = 339
+    Width = 43
+    Caption = 'Label3'
+    ParentColor = False
+  end
+  object MainMenu1: TMainMenu
+    left = 168
+    top = 65520
+    object MenuItem1: TMenuItem
+      Caption = 'File'
+    end
+    object MenuItem2: TMenuItem
+      Caption = 'Help'
+    end
+  end
+  object Timer1: TTimer
+    OnTimer = Timer1Timer
+    OnStartTimer = Timer1StartTimer
+    left = 200
+    top = 65520
+  end
+end
