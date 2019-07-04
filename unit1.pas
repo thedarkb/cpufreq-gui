@@ -2,6 +2,7 @@ unit Unit1;
 
 {$mode objfpc}{$H+}
 
+
 interface
 
 uses
@@ -14,9 +15,8 @@ type
 
   Tcpufreqgui = class(TForm)
     Apply: TButton;
-    Label1: TLabel;
-    Label3: TLabel;
     maxBox: TComboBox;
+    MenuItem3: TMenuItem;
     minBox: TComboBox;
     maxF: TLabel;
     minF: TLabel;
@@ -39,7 +39,11 @@ type
     MenuItem1: TMenuItem;
     MenuItem2: TMenuItem;
     Timer1: TTimer;
+    procedure ApplyClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure MenuItem2Click(Sender: TObject);
+    procedure MenuItem3Click(Sender: TObject);
+    procedure QuitClick(Sender: TObject);
     procedure Timer1StartTimer(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
     procedure refreshInfo;
@@ -64,6 +68,7 @@ var
   curMin: byte;
   curMax: byte;
   selGov: string;
+  msg: longint;
 
 const
   workPath = '/sys/devices/system/cpu/cpufreq/policy0/';
@@ -75,6 +80,7 @@ implementation
 {$R *.lfm}
 
 { Tcpufreqgui }
+
 
 procedure Tcpufreqgui.Timer1Timer(Sender: TObject);
 begin
@@ -130,7 +136,6 @@ begin
   reset(theFile);
   ReadLn(theFile, stringIn);
   maxBox.Items := clocksGhz;
-  Label3.Caption := stringIn;
   for i:=0 to maxBox.Items.Count-1 do
   begin
     if clocks[i] = stringIn then maxBox.ItemIndex:=i;
@@ -141,7 +146,6 @@ begin
   reset(theFile);
   ReadLn(theFile, stringIn);
   minBox.Items := clocksGhz;
-  Label1.Caption := stringIn;
   for i:=0 to maxBox.Items.Count-1 do
   begin
     if clocks[i] = stringIn then minBox.ItemIndex:=i;
@@ -159,6 +163,59 @@ begin
   begin
     if governorBox.Items[i] = selGov then governorBox.ItemIndex := i;
   end;
+end;
+
+procedure Tcpufreqgui.MenuItem2Click(Sender: TObject);
+begin
+
+end;
+
+procedure Tcpufreqgui.MenuItem3Click(Sender: TObject);
+begin
+ ShowMessage('Written by Thedarkb'+sLineBreak+'Licensed under the three clause BSD. © 2019');
+end;
+
+procedure Tcpufreqgui.QuitClick(Sender: TObject);
+begin
+  halt;
+end;
+
+procedure Tcpufreqgui.ApplyClick(Sender: TObject);
+label skip;
+begin
+  if maxBox.ItemIndex > minBox.ItemIndex then
+  begin
+    msg := Application.MessageBox('Invalid configuration, cannot apply!', 'Error');
+    goto skip; //I know it's bad, but it just skips to the end of this procedure.
+  end;
+
+  AssignFile(theFile, workPath+'scaling_max_freq');
+  rewrite(theFile);
+  write(theFile, clocks[maxBox.ItemIndex]);
+  CloseFile(theFile);
+
+  AssignFile(theFile, workPath+'scaling_min_freq');
+  rewrite(theFile);
+  write(theFile, clocks[minBox.ItemIndex]);
+  CloseFile(theFile);
+
+  AssignFile(theFile, workPath+'scaling_governor');
+  rewrite(theFile);
+  write(theFile, governorBox.Items[governorBox.ItemIndex]);
+  CloseFile(theFile);
+
+  AssignFile(theFile, ignorePath+'ignore_tpc');
+  rewrite(theFile);
+  if throttleBoxes.Checked[0] then write(theFile, '1');
+  if not throttleBoxes.Checked[0] then write(theFile, '0');
+  CloseFile(theFile);
+
+  AssignFile(theFile, ignorePath+'ignore_ppc');
+  rewrite(theFile);
+  if throttleBoxes.Checked[1] then write(theFile, '1');
+  if not throttleBoxes.Checked[1] then write(theFile, '0');
+  CloseFile(theFile);
+  skip:
 end;
 
 
@@ -203,8 +260,6 @@ begin
   stringIn := LeftStr(stringIn, 5)+'GHz';
   maxFreq.Caption := stringIn;
   CloseFile(theFile);
-
-
 end;
 
 end.

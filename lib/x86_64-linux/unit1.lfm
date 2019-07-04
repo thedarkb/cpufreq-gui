@@ -1,10 +1,11 @@
 object cpufreqgui: Tcpufreqgui
   Left = 340
-  Height = 381
+  Height = 400
   Top = 138
   Width = 231
-  Caption = 'Hard Abuse'
-  ClientHeight = 358
+  BorderStyle = bsToolWindow
+  Caption = 'CPU Frequency GUI'
+  ClientHeight = 377
   ClientWidth = 231
   Menu = MainMenu1
   OnCreate = FormCreate
@@ -12,7 +13,7 @@ object cpufreqgui: Tcpufreqgui
   object throttleBoxes: TCheckGroup
     Left = 8
     Height = 73
-    Top = 208
+    Top = 200
     Width = 216
     AutoFill = True
     Caption = 'Throttling'
@@ -38,7 +39,7 @@ object cpufreqgui: Tcpufreqgui
   object GroupBox1: TGroupBox
     Left = 8
     Height = 113
-    Top = 96
+    Top = 88
     Width = 216
     Caption = 'Scaling'
     ClientHeight = 96
@@ -72,7 +73,7 @@ object cpufreqgui: Tcpufreqgui
   object governorBox: TComboBox
     Left = 112
     Height = 25
-    Top = 112
+    Top = 104
     Width = 100
     ItemHeight = 0
     Items.Strings = (
@@ -84,7 +85,7 @@ object cpufreqgui: Tcpufreqgui
   object GroupBox2: TGroupBox
     Left = 8
     Height = 88
-    Top = 8
+    Top = 0
     Width = 216
     Caption = 'Info'
     ClientHeight = 71
@@ -170,31 +171,33 @@ object cpufreqgui: Tcpufreqgui
   object Apply: TButton
     Left = 8
     Height = 25
-    Top = 288
-    Width = 48
+    Top = 280
+    Width = 216
     Caption = 'Apply'
+    OnClick = ApplyClick
     TabOrder = 4
   end
   object mkDefault: TButton
-    Left = 64
+    Left = 8
     Height = 25
-    Top = 288
-    Width = 104
-    Caption = 'mkDefault'
+    Top = 312
+    Width = 216
+    Caption = 'Apply on Boot'
     TabOrder = 5
   end
   object Quit: TButton
-    Left = 176
+    Left = 8
     Height = 25
-    Top = 288
-    Width = 48
+    Top = 344
+    Width = 216
     Caption = 'Quit'
+    OnClick = QuitClick
     TabOrder = 6
   end
   object maxBox: TComboBox
     Left = 112
     Height = 25
-    Top = 144
+    Top = 136
     Width = 100
     ItemHeight = 0
     Items.Strings = (
@@ -206,7 +209,7 @@ object cpufreqgui: Tcpufreqgui
   object minBox: TComboBox
     Left = 112
     Height = 25
-    Top = 176
+    Top = 168
     Width = 100
     ItemHeight = 0
     Items.Strings = (
@@ -214,22 +217,6 @@ object cpufreqgui: Tcpufreqgui
     )
     Style = csDropDownList
     TabOrder = 8
-  end
-  object Label1: TLabel
-    Left = 13
-    Height = 15
-    Top = 322
-    Width = 43
-    Caption = 'Label1'
-    ParentColor = False
-  end
-  object Label3: TLabel
-    Left = 13
-    Height = 15
-    Top = 339
-    Width = 43
-    Caption = 'Label3'
-    ParentColor = False
   end
   object MainMenu1: TMainMenu
     left = 168
@@ -239,6 +226,11 @@ object cpufreqgui: Tcpufreqgui
     end
     object MenuItem2: TMenuItem
       Caption = 'Help'
+      OnClick = MenuItem2Click
+      object MenuItem3: TMenuItem
+        Caption = 'About'
+        OnClick = MenuItem3Click
+      end
     end
   end
   object Timer1: TTimer
