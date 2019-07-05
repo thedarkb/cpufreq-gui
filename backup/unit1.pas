@@ -128,6 +128,7 @@ begin
     Application.MessageBox('Cpufrequtils required but not found.', 'Error');
     halt;
   end;
+  Timer1.Enabled := true;
   refreshInfo;
   AssignFile(theFile, ignorepath+'ignore_ppc');
   reset(theFile);
@@ -207,7 +208,7 @@ end;
 procedure Tcpufreqgui.MenuItem3Click(Sender: TObject);
 begin
  ShowMessage('Written by Thedarkb'+sLineBreak+'Licensed under the three clause BSD. © 2019'+
- sLineBreak+sLineBreak+'Icon by Discord user NotCoolBro#8536'+sLineBreak+sLineBreak+
+ sLineBreak+sLineBreak+'Icon by RJ, also known as Dellguy.'+sLineBreak+sLineBreak+
  'Version 1.0');
 end;
 
