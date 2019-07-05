@@ -166,7 +166,6 @@ begin
     if ghzVal < 1000000 then
     begin
       Str(ghzVal:0:2, stringIn);
-      dbg.Caption := stringIn;
       stringIn := ' 0.'+LeftStr(stringIn, 2)+'GHz';
     end;
     if ghzVal >= 1000000 then
@@ -370,7 +369,6 @@ begin
   if ghzVal < 1000000 then
   begin
     Str(ghzVal:0:2, stringIn);
-    dbg.Caption := stringIn;
     stringIn := ' 0.'+LeftStr(stringIn, 2)+'GHz';
   end;
   if ghzVal >= 1000000 then
@@ -389,7 +387,6 @@ begin
   if ghzVal < 1000000 then
   begin
     Str(ghzVal:0:2, stringIn);
-    dbg.Caption := stringIn;
     stringIn := ' 0.'+LeftStr(stringIn, 2)+'GHz';
   end;
   if ghzVal >= 1000000 then
@@ -408,7 +405,6 @@ begin
   if ghzVal < 1000000 then
   begin
     Str(ghzVal:0:2, stringIn);
-    dbg.Caption := stringIn;
     stringIn := ' 0.'+LeftStr(stringIn, 2)+'GHz';
   end;
   if ghzVal >= 1000000 then
@@ -427,7 +423,6 @@ begin
   if ghzVal < 1000000 then
   begin
     Str(ghzVal:0:2, stringIn);
-    dbg.Caption := stringIn;
     stringIn := ' 0.'+LeftStr(stringIn, 2)+'GHz';
   end;
   if ghzVal >= 1000000 then
