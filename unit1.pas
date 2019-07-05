@@ -207,7 +207,8 @@ end;
 procedure Tcpufreqgui.MenuItem3Click(Sender: TObject);
 begin
  ShowMessage('Written by Thedarkb'+sLineBreak+'Licensed under the three clause BSD. © 2019'+
- sLineBreak+sLineBreak+'Version 1.0');
+ sLineBreak+sLineBreak+'Icon by Discord user NotCoolBro#8536'+sLineBreak+sLineBreak+
+ 'Version 1.0');
 end;
 
 procedure Tcpufreqgui.MenuItem4Click(Sender: TObject);
