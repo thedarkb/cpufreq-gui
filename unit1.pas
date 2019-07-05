@@ -20,6 +20,7 @@ type
 
   Tcpufreqgui = class(TForm)
     Apply: TButton;
+    dbg: TLabel;
     maxBox: TComboBox;
     MenuItem3: TMenuItem;
     MenuItem4: TMenuItem;
@@ -91,6 +92,7 @@ var
   user: integer;
   tpcRep: byte;
   ppcRep: byte;
+  ghzWord: word;
 
 const
   workPath = '/sys/devices/system/cpu/cpufreq/policy0/';
@@ -162,9 +164,19 @@ begin
   for i:=0 to clocks.Count-1 do
   begin
     val(clocks[i], ghzVal);
-    ghzVal := ghzVal / 100;
-    str(ghzVal, stringIn);
-    clocksGhz.Add(LeftStr(stringIn, 5)+'GHz');
+    if ghzVal < 1000000 then
+    begin
+      Str(ghzVal:0:2, stringIn);
+      dbg.Caption := stringIn;
+      stringIn := ' 0.'+LeftStr(stringIn, 2)+'GHz';
+    end;
+    if ghzVal >= 1000000 then
+    begin
+      ghzVal := ghzVal / 100;
+      Str(ghzVal, stringIn);
+      stringIn := LeftStr(stringIn, 5)+'GHz';
+    end;
+    clocksGhz.Add(stringIn);
   end;
 
   AssignFile(theFile, workPath+'scaling_max_freq');
@@ -356,9 +368,18 @@ begin
   reset(theFile);
   ReadLn(theFile, stringIn);
   val(stringIn, ghzVal);
-  ghzVal := ghzVal / 100;
-  Str(ghzVal, stringIn);
-  stringIn := LeftStr(stringIn, 5)+'GHz';
+  if ghzVal < 1000000 then
+  begin
+    Str(ghzVal:0:2, stringIn);
+    dbg.Caption := stringIn;
+    stringIn := ' 0.'+LeftStr(stringIn, 2)+'GHz';
+  end;
+  if ghzVal >= 1000000 then
+  begin
+    ghzVal := ghzVal / 100;
+    Str(ghzVal, stringIn);
+    stringIn := LeftStr(stringIn, 5)+'GHz';
+  end;
   curLbl.Caption := stringIn;
   CloseFile(theFile);
 
@@ -366,9 +387,18 @@ begin
   reset(theFile);
   ReadLn(theFile, stringIn);
   val(stringIn, ghzVal);
-  ghzVal := ghzVal / 100;
-  Str(ghzVal, stringIn);
-  stringIn := LeftStr(stringIn, 5)+'GHz';
+  if ghzVal < 1000000 then
+  begin
+    Str(ghzVal:0:2, stringIn);
+    dbg.Caption := stringIn;
+    stringIn := ' 0.'+LeftStr(stringIn, 2)+'GHz';
+  end;
+  if ghzVal >= 1000000 then
+  begin
+    ghzVal := ghzVal / 100;
+    Str(ghzVal, stringIn);
+    stringIn := LeftStr(stringIn, 5)+'GHz';
+  end;
   bios.Caption := stringIn;
   CloseFile(theFile);
 
@@ -376,9 +406,18 @@ begin
   reset(theFile);
   ReadLn(theFile, stringIn);
   val(stringIn, ghzVal);
-  ghzVal := ghzVal / 100;
-  Str(ghzVal, stringIn);
-  stringIn := LeftStr(stringIn, 5)+'GHz';
+  if ghzVal < 1000000 then
+  begin
+    Str(ghzVal:0:2, stringIn);
+    dbg.Caption := stringIn;
+    stringIn := ' 0.'+LeftStr(stringIn, 2)+'GHz';
+  end;
+  if ghzVal >= 1000000 then
+  begin
+    ghzVal := ghzVal / 100;
+    Str(ghzVal, stringIn);
+    stringIn := LeftStr(stringIn, 5)+'GHz';
+  end;
   minFreq.Caption := stringIn;
   CloseFile(theFile);
 
@@ -386,9 +425,18 @@ begin
   reset(theFile);
   ReadLn(theFile, stringIn);
   val(stringIn, ghzVal);
-  ghzVal := ghzVal / 100;
-  Str(ghzVal, stringIn);
-  stringIn := LeftStr(stringIn, 5)+'GHz';
+  if ghzVal < 1000000 then
+  begin
+    Str(ghzVal:0:2, stringIn);
+    dbg.Caption := stringIn;
+    stringIn := ' 0.'+LeftStr(stringIn, 2)+'GHz';
+  end;
+  if ghzVal >= 1000000 then
+  begin
+    ghzVal := ghzVal / 100;
+    Str(ghzVal, stringIn);
+    stringIn := LeftStr(stringIn, 5)+'GHz';
+  end;
   maxFreq.Caption := stringIn;
   CloseFile(theFile);
 end;
