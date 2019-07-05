@@ -128,6 +128,7 @@ begin
     Application.MessageBox('Cpufrequtils required but not found.', 'Error');
     halt;
   end;
+  Timer1.Enabled := true;
   refreshInfo;
   AssignFile(theFile, ignorepath+'ignore_ppc');
   reset(theFile);

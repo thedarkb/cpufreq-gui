@@ -387,6 +387,7 @@ object cpufreqgui: Tcpufreqgui
     end
   end
   object Timer1: TTimer
+    Enabled = False
     OnTimer = Timer1Timer
     OnStartTimer = Timer1StartTimer
     left = 200
