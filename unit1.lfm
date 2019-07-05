@@ -1,11 +1,11 @@
 object cpufreqgui: Tcpufreqgui
   Left = 340
-  Height = 440
+  Height = 400
   Top = 138
   Width = 231
   BorderStyle = bsToolWindow
   Caption = 'CPU Frequency GUI'
-  ClientHeight = 417
+  ClientHeight = 377
   ClientWidth = 231
   Icon.Data = {
     BE1000000000010001002020000001002000A810000016000000280000002000
@@ -355,14 +355,6 @@ object cpufreqgui: Tcpufreqgui
     )
     Style = csDropDownList
     TabOrder = 8
-  end
-  object dbg: TLabel
-    Left = 16
-    Height = 15
-    Top = 376
-    Width = 24
-    Caption = 'dbg'
-    ParentColor = False
   end
   object MainMenu1: TMainMenu
     left = 168

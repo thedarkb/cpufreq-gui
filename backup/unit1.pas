@@ -20,7 +20,6 @@ type
 
   Tcpufreqgui = class(TForm)
     Apply: TButton;
-    dbg: TLabel;
     maxBox: TComboBox;
     MenuItem3: TMenuItem;
     MenuItem4: TMenuItem;
@@ -164,18 +163,18 @@ begin
   for i:=0 to clocks.Count-1 do
   begin
     val(clocks[i], ghzVal);
-      if ghzVal < 1000000 then
-      begin
-        Str(ghzVal:0:2, stringIn);
-        dbg.Caption := stringIn;
-        stringIn := ' 0.'+LeftStr(stringIn, 2)+'GHz';
-      end;
-      if ghzVal >= 1000000 then
-      begin
-        ghzVal := ghzVal / 100;
-        Str(ghzVal, stringIn);
-        stringIn := LeftStr(stringIn, 5)+'GHz';
-      end;
+    if ghzVal < 1000000 then
+    begin
+      Str(ghzVal:0:2, stringIn);
+      dbg.Caption := stringIn;
+      stringIn := ' 0.'+LeftStr(stringIn, 2)+'GHz';
+    end;
+    if ghzVal >= 1000000 then
+    begin
+      ghzVal := ghzVal / 100;
+      Str(ghzVal, stringIn);
+      stringIn := LeftStr(stringIn, 5)+'GHz';
+    end;
     clocksGhz.Add(stringIn);
   end;
 
