@@ -43,6 +43,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure MenuItem2Click(Sender: TObject);
     procedure MenuItem3Click(Sender: TObject);
+    procedure QuitClick(Sender: TObject);
     procedure Timer1StartTimer(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
     procedure refreshInfo;
@@ -172,6 +173,11 @@ end;
 procedure Tcpufreqgui.MenuItem3Click(Sender: TObject);
 begin
  ShowMessage('Written by Thedarkb'+sLineBreak+'Licensed under the three clause BSD. © 2019');
+end;
+
+procedure Tcpufreqgui.QuitClick(Sender: TObject);
+begin
+  halt;
 end;
 
 procedure Tcpufreqgui.ApplyClick(Sender: TObject);

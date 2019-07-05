@@ -191,6 +191,7 @@ object cpufreqgui: Tcpufreqgui
     Top = 344
     Width = 216
     Caption = 'Quit'
+    OnClick = QuitClick
     TabOrder = 6
   end
   object maxBox: TComboBox

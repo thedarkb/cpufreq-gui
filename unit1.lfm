@@ -231,6 +231,10 @@ object cpufreqgui: Tcpufreqgui
         Caption = 'About'
         OnClick = MenuItem3Click
       end
+      object MenuItem4: TMenuItem
+        Caption = 'Help'
+        OnClick = MenuItem4Click
+      end
     end
   end
   object Timer1: TTimer

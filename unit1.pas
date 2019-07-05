@@ -17,6 +17,7 @@ type
     Apply: TButton;
     maxBox: TComboBox;
     MenuItem3: TMenuItem;
+    MenuItem4: TMenuItem;
     minBox: TComboBox;
     maxF: TLabel;
     minF: TLabel;
@@ -43,6 +44,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure MenuItem2Click(Sender: TObject);
     procedure MenuItem3Click(Sender: TObject);
+    procedure MenuItem4Click(Sender: TObject);
     procedure QuitClick(Sender: TObject);
     procedure Timer1StartTimer(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
@@ -173,6 +175,19 @@ end;
 procedure Tcpufreqgui.MenuItem3Click(Sender: TObject);
 begin
  ShowMessage('Written by Thedarkb'+sLineBreak+'Licensed under the three clause BSD. © 2019');
+end;
+
+procedure Tcpufreqgui.MenuItem4Click(Sender: TObject);
+begin
+  ShowMessage('If the clock speed will not climb above the BIOS limit, you may'+
+  ' need to disable one or both forms of throttling. This has the potential'+
+  ' to cause data loss or even damage your computer so do this only as a'+
+  ' last resort on hardware that you are willing to lose.'+sLineBreak+sLineBreak+
+  'The "Apply on Boot" button only functions on systemd based distros.'+sLineBreak+sLineBreak+
+  'An invalid configuration is usually due to the minimum clock speed being set'+
+  ' above the maximum.'+sLineBreak+sLineBreak+
+  'Issues and suggestions may be posted to'+sLineBreak+
+  'https://github.com/thedarkb/cpufreq-gui');
 end;
 
 procedure Tcpufreqgui.QuitClick(Sender: TObject);
