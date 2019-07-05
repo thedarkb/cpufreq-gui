@@ -183,6 +183,7 @@ object cpufreqgui: Tcpufreqgui
     Top = 312
     Width = 216
     Caption = 'Apply on Boot'
+    OnClick = mkDefaultClick
     TabOrder = 5
   end
   object Quit: TButton
@@ -223,6 +224,17 @@ object cpufreqgui: Tcpufreqgui
     top = 65520
     object MenuItem1: TMenuItem
       Caption = 'File'
+      object MenuItem5: TMenuItem
+        Caption = 'Save'
+        OnClick = MenuItem5Click
+      end
+      object MenuItem6: TMenuItem
+        Caption = 'Load'
+        OnClick = MenuItem6Click
+      end
+      object MenuItem7: TMenuItem
+        Caption = 'Quit'
+      end
     end
     object MenuItem2: TMenuItem
       Caption = 'Help'
@@ -231,12 +243,28 @@ object cpufreqgui: Tcpufreqgui
         Caption = 'About'
         OnClick = MenuItem3Click
       end
+      object MenuItem4: TMenuItem
+        Caption = 'Help'
+        OnClick = MenuItem4Click
+      end
     end
   end
   object Timer1: TTimer
     OnTimer = Timer1Timer
     OnStartTimer = Timer1StartTimer
     left = 200
+    top = 65520
+  end
+  object SaveDialog1: TSaveDialog
+    Title = 'Save configuration'
+    DefaultExt = '.dat'
+    left = 136
+    top = 65520
+  end
+  object OpenDialog1: TOpenDialog
+    Title = 'Load existing configuration'
+    DefaultExt = '.dat'
+    left = 104
     top = 65520
   end
 end

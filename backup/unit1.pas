@@ -13,15 +13,26 @@ type
 
   { Tcpufreqgui }
 
+  Tcfg = record
+    version, gov, max, min : byte;
+    tpc, ppc : boolean;
+  end;
+
   Tcpufreqgui = class(TForm)
     Apply: TButton;
     maxBox: TComboBox;
     MenuItem3: TMenuItem;
+    MenuItem4: TMenuItem;
+    MenuItem5: TMenuItem;
+    MenuItem6: TMenuItem;
+    MenuItem7: TMenuItem;
     minBox: TComboBox;
     maxF: TLabel;
     minF: TLabel;
+    OpenDialog1: TOpenDialog;
     Quit: TButton;
     mkDefault: TButton;
+    SaveDialog1: TSaveDialog;
     throttleBoxes: TCheckGroup;
     governorBox: TComboBox;
     GroupBox1: TGroupBox;
@@ -43,6 +54,10 @@ type
     procedure FormCreate(Sender: TObject);
     procedure MenuItem2Click(Sender: TObject);
     procedure MenuItem3Click(Sender: TObject);
+    procedure MenuItem4Click(Sender: TObject);
+    procedure MenuItem5Click(Sender: TObject);
+    procedure MenuItem6Click(Sender: TObject);
+    procedure mkDefaultClick(Sender: TObject);
     procedure QuitClick(Sender: TObject);
     procedure Timer1StartTimer(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
@@ -69,10 +84,13 @@ var
   curMax: byte;
   selGov: string;
   msg: longint;
+  cfgFile: file of Tcfg;
+  cfg: Tcfg;
 
 const
   workPath = '/sys/devices/system/cpu/cpufreq/policy0/';
   ignorePath = '/sys/module/processor/parameters/';
+  fileVer = 1;
 
 
 implementation
@@ -173,6 +191,77 @@ end;
 procedure Tcpufreqgui.MenuItem3Click(Sender: TObject);
 begin
  ShowMessage('Written by Thedarkb'+sLineBreak+'Licensed under the three clause BSD. © 2019');
+end;
+
+procedure Tcpufreqgui.MenuItem4Click(Sender: TObject);
+begin
+  ShowMessage('If the clock speed will not climb above the BIOS limit, you may'+
+  ' need to disable one or both forms of throttling. This has the potential'+
+  ' to cause data loss or even damage to your computer so do this only as a'+
+  ' last resort on hardware that you are willing to lose.'+sLineBreak+sLineBreak+
+  'The "Apply on Boot" button only functions on systemd based distros.'+sLineBreak+sLineBreak+
+  'An invalid configuration is usually due to the minimum clock speed being set'+
+  ' above the maximum.'+sLineBreak+sLineBreak+
+  'Configurations are only valid for the CPUs they were created for.'+sLineBreak+sLineBreak+
+  'Issues and suggestions may be posted to'+sLineBreak+
+  'https://github.com/thedarkb/cpufreq-gui');
+end;
+
+procedure Tcpufreqgui.MenuItem5Click(Sender: TObject);
+begin
+  if SaveDialog1.Execute then
+  begin
+    cfg.version := fileVer;
+    cfg.gov := governorBox.ItemIndex;
+    cfg.min := minBox.ItemIndex;
+    cfg.max := maxBox.ItemIndex;
+    cfg.tpc := throttleBoxes.Checked[0];
+    cfg.ppc := throttleBoxes.Checked[1];
+
+    AssignFile(cfgFile, SaveDialog1.FileName);
+    rewrite(cfgFile);
+    write(cfgFile, cfg);
+    CloseFile(cfgFile);
+  end;
+end;
+
+procedure Tcpufreqgui.MenuItem6Click(Sender: TObject);
+begin
+  if OpenDialog1.Execute then
+  begin
+    AssignFile(cfgFile, OpenDialog1.FileName);
+    Reset(cfgFile);
+    Read(cfgFile, cfg);
+    CloseFile(cfgFile);
+    if cfg.gov < governorBox.Items.Count then governorBox.ItemIndex := cfg.gov
+    else
+      begin
+        ShowMessage('Invalid configuration.');
+        Exit;
+      end;
+    if cfg.min < minBox.Items.Count then minBox.ItemIndex := cfg.min
+    else
+      begin
+        ShowMessage('Invalid configuration.');
+        Exit;
+      end;
+    if cfg.max < maxBox.Items.Count then maxBox.ItemIndex := cfg.max
+    else
+      begin
+        ShowMessage('Invalid configuration.');
+        Exit;
+      end;
+    if cfg.version <> fileVer then
+    begin
+      ShowMessage('Incompatible file version.');
+      Exit;
+    end;
+  end;
+end;
+
+procedure Tcpufreqgui.mkDefaultClick(Sender: TObject);
+begin
+  ShowMessage('Not yet implemented.');
 end;
 
 procedure Tcpufreqgui.QuitClick(Sender: TObject);
