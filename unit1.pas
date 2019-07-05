@@ -7,7 +7,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, Menus,
-  StdCtrls;
+  StdCtrls, BaseUnix, Unix;
 
 type
 
@@ -86,6 +86,11 @@ var
   msg: longint;
   cfgFile: file of Tcfg;
   cfg: Tcfg;
+  sysdc: textfile;
+  aStr: string;
+  user: integer;
+  tpcRep: byte;
+  ppcRep: byte;
 
 const
   workPath = '/sys/devices/system/cpu/cpufreq/policy0/';
@@ -107,11 +112,22 @@ end;
 
 procedure Tcpufreqgui.Timer1StartTimer(Sender: TObject);
 begin
-  refreshInfo;
+  //refreshInfo;
 end;
 
 procedure Tcpufreqgui.FormCreate(Sender: TObject);
 begin
+  user := fpgeteuid;
+  if user <> 0 then
+  begin
+    Application.MessageBox('Must be run as root!', 'Error');
+    halt;
+  end;
+  if not FileExists(workPath+'scaling_governor') then
+  begin
+    Application.MessageBox('Cpufrequtils required but not found.', 'Error');
+    halt;
+  end;
   refreshInfo;
   AssignFile(theFile, ignorepath+'ignore_ppc');
   reset(theFile);
@@ -190,7 +206,8 @@ end;
 
 procedure Tcpufreqgui.MenuItem3Click(Sender: TObject);
 begin
- ShowMessage('Written by Thedarkb'+sLineBreak+'Licensed under the three clause BSD. © 2019');
+ ShowMessage('Written by Thedarkb'+sLineBreak+'Licensed under the three clause BSD. © 2019'+
+ sLineBreak+sLineBreak+'Version 1.0');
 end;
 
 procedure Tcpufreqgui.MenuItem4Click(Sender: TObject);
@@ -237,7 +254,7 @@ begin
     begin
       ShowMessage('Incompatible file version.');
       Exit;
-    end
+    end;
     if cfg.gov < governorBox.Items.Count then governorBox.ItemIndex := cfg.gov
     else
       begin
@@ -256,12 +273,35 @@ begin
         ShowMessage('Invalid configuration.');
         Exit;
       end;
+    throttleBoxes.Checked[0] := cfg.tpc;
+    throttleBoxes.Checked[1] := cfg.ppc;
   end;
 end;
 
 procedure Tcpufreqgui.mkDefaultClick(Sender: TObject);
 begin
-  ShowMessage('Not yet implemented.');
+  if throttleBoxes.Checked[0] then tpcRep := 1 else tpcRep:=0;
+  if throttleBoxes.Checked[1] then ppcRep := 1 else ppcRep:=0;
+
+  AssignFile(theFile, '/etc/tmpfiles.d/cpufreq.conf');
+  rewrite(theFile);
+  aStr := 'w '+workPath+'scaling_governor - - - - '+governors[governorBox.ItemIndex];
+  writeln(theFile, aStr);
+
+  aStr := 'w '+workPath+'scaling_max_freq - - - - '+clocks[maxBox.ItemIndex];
+  writeln(theFile, aStr);
+
+  aStr := 'w '+workPath+'scaling_min_freq - - - - '+clocks[minBox.ItemIndex];
+  writeln(theFile, aStr);
+
+  aStr := 'w '+ignorePath+'ignore_tpc - - - - '+IntToStr(tpcRep);
+  writeln(theFile, aStr);
+
+  aStr := 'w '+ignorePath+'ignore_ppc - - - - '+IntToStr(ppcRep);
+  writeln(theFile, aStr);
+  CloseFile(theFile);
+
+  fpsystem('systemd-tmpfiles --prefix=/sys --create');
 end;
 
 procedure Tcpufreqgui.QuitClick(Sender: TObject);
